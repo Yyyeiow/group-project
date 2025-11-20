@@ -1,0 +1,155 @@
+/* 전체 */
+.myfeed-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+background: #f1f1f1;
+min-height: 100vh;
+}
+
+/* 헤더 */
+.myfeed-header {
+position: sticky;
+top: 0;
+width: 100%;
+background: #f1f1f1;
+padding: 15px 30px;
+display: flex;
+justify-content: space-between;
+border-bottom: 1px solid #BFBFBF;
+z-index: 10;
+}
+
+/* 버튼 + 보기 전환 */
+.header-right-all {
+display: flex;
+align-items: center;
+gap: 15px;
+}
+
+.header-btn-group {
+display: flex;
+gap: 10px;
+}
+
+.nav-btn {
+border: 1px solid #BFBFBF;
+background: #f1f1f1;
+padding: 6px 10px;
+border-radius: 0;
+cursor: pointer;
+font-weight: 600;
+}
+
+.view-switch {
+display: flex;
+gap: 8px;
+}
+
+.view-switch button {
+font-size: 18px;
+background: #f1f1f1;
+border: 1px solid #BFBFBF;
+padding: 4px 8px;
+border-radius: 0;
+cursor: pointer;
+}
+
+.view-switch button.active {
+background: #BFBFBF;
+}
+
+/* 리스트뷰 */
+
+.feed-list {
+width: 100%;
+max-width: 900px;
+padding: 40px 0;
+display: flex;
+flex-direction: column;
+gap: 40px;
+}
+
+.post {
+width: 100%;
+padding: 25px 30px;
+background: white;
+border: 1px solid #BFBFBF;
+border-radius: 0;
+}
+
+/* 날짜 */
+.post-date {
+font-size: 14px;
+margin-bottom: 10px;
+color: #555;
+}
+
+/* 제목 */
+.post-title {
+font-size: 18px;
+font-weight: 600;
+margin-bottom: 18px;
+}
+
+/* 사진 (가운데 정렬) */
+.post-images {
+display: flex;
+gap: 15px;
+justify-content: center;
+margin-bottom: 20px;
+}
+
+.post-img-box {
+width: 150px;
+height: 150px;
+background: #d1d1d1;
+border-radius: 0;
+border: 1px solid #BFBFBF;
+}
+
+/* 내용 */
+.post-content {
+white-space: pre-line;
+line-height: 1.5;
+font-size: 16px;
+padding-top: 10px;
+border-top: 1px solid #BFBFBF;
+}
+
+/* 그리드 */
+
+
+.feed-grid {
+width: 100%;
+max-width: 1000px;
+padding: 40px 0;
+display: flex;
+gap: 20px;
+overflow-x: auto;
+}
+
+.feed-grid .post {
+flex: 0 0 auto;
+width: 300px;
+height: 300px;
+background: white;
+border: 1px solid #BFBFBF;
+border-radius: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+/* 대표 이미지 */
+.feed-grid .post-images {
+width: 85%;
+height: 85%;
+justify-content: center;
+}
+
+.feed-grid .post-img-box {
+width: 100%;
+height: 100%;
+border-radius: 0;
+}
