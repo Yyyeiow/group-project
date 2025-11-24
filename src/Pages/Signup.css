@@ -1,0 +1,137 @@
+.signup-container {
+width: 100vw;
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: flex-start;
+padding-top: 80px;
+background: white;
+}
+
+.signup-box {
+width: 450px;
+padding: 40px 40px;
+background: white;
+border-radius: 16px;
+box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+}
+
+.signup-box h2 {
+font-size: 24px;
+font-weight: 700;
+text-align: center;
+margin-bottom: 35px;
+color: #333;
+}
+
+/* Input 그룹 */
+.input-group {
+display: flex;
+flex-direction: column;
+margin-bottom: 22px;
+}
+
+.input-group label {
+font-size: 14px;
+margin-bottom: 8px;
+color: #555;
+}
+
+.input-group input {
+width: 100%;
+padding: 12px;
+border: 1px solid #dcdcdc;
+border-radius: 6px;
+font-size: 15px;
+outline: none;
+}
+
+.phone-wrap {
+display: flex;
+gap: 8px;
+}
+
+.phone-wrap select {
+width: 140px;
+padding: 12px;
+border: 1px solid #dcdcdc;
+border-radius: 6px;
+background: white;
+}
+
+/* 성별 버튼 */
+.gender-wrap {
+display: flex;
+gap: 10px;
+}
+
+.gender-wrap button {
+flex: 1;
+padding: 10px 0;
+border: 1px solid #dcdcdc;
+border-radius: 6px;
+background: #f9f9f9;
+cursor: pointer;
+font-size: 14px;
+}
+
+.gender-wrap .active {
+border-color: #3d8bff;
+background: #eaf1ff;
+}
+
+/* 가입 버튼 */
+.signup-btn {
+width: 100%;
+padding: 14px;
+background: #3d8bff;
+color: white;
+border: none;
+border-radius: 8px;
+font-weight: 600;
+margin-top: 10px;
+cursor: pointer;
+}
+
+.signup-btn:hover {
+opacity: 0.92;
+}
+
+/* 메시지 */
+.signup-message {
+margin-top: 14px;
+color: #505050;
+font-size: 14px;
+text-align: center;
+}
+
+/* 중복확인, 인증번호 발송 */
+.btn-duplicate {
+  background-color: #bfbfbf; 
+  color: white;
+  border: none;
+  border-radius: 8px; 
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-duplicate:hover {
+  background-color: #bfbfbf;
+  transform: scale(1.05);
+}
+
+
+/* 하단 링크 */
+.bottom-link {
+margin-top: 18px;
+font-size: 14px;
+text-align: center;
+}
+
+.bottom-link a {
+text-decoration: none;
+color: #3d8bff;
+font-weight: 600;
+}
