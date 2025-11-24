@@ -1,3 +1,4 @@
+import './HomepageCPcss/Pagination.css';
 const Pagination = ({ totalPages, currentPage, onPageChange }) => {
   const pageNumbers = [];
   for (let i = 1; i <= totalPages; i++) {

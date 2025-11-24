@@ -1,0 +1,72 @@
+.post-card {
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+}
+
+.post-image {
+    width: 100%;
+    aspect-ratio: 1;
+    background: #e1e1e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #666;
+    position: relative;
+    overflow: hidden;
+}
+
+.post-description {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.584);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5;
+    opacity: 0;
+    transform: rotateY(90deg);
+    transition: all 0.4s ease;
+    backface-visibility: hidden;
+}
+
+.post-card:hover .post-description {
+    opacity: 1;
+    transform: rotateY(0deg);
+}
+
+.post-info {
+    padding: 5px 0px 10px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    overflow: hidden;
+}
+
+.music-info {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.music-info-text {
+    display: inline-block;
+    animation: none;
+}
+
+.post-card:hover .music-info-text.overflow {
+    animation: scroll-text 8s linear infinite;
+}

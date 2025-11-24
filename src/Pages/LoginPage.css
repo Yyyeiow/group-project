@@ -1,0 +1,83 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  background: #fff;
+}
+
+
+.login-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.login-box {
+  width: 320px;
+  padding: 40px 32px;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.login-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: #505050;
+}
+
+.login-input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 16px;
+  font-family: inherit;
+  border: none;
+  border-bottom: 1px solid #787878;
+  background: transparent;
+  outline: none;
+}
+
+.forgot {
+  width: 100%;
+  text-align: left;
+  margin-top: 2px;
+  font-size: 12px;
+  color: #505050;
+}
+
+/* �뚮��� 踰꾪듉 */
+.login-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px 0;
+  border-radius: 25px;
+  border: none;
+  background: #4ea1ff;
+  color: #fff;
+  font-size: 18px;
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.login-btn:hover {
+  background: #3d8ee0;
+}
+
+.signup-text {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #505050;
+}
+
+.signup-text a {
+  color: #5a8cff;
+  text-decoration: none;
+}

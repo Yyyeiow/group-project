@@ -1,21 +1,21 @@
 /* Write.css */
 
 .main-content {
-    margin-top: 160px; 
-    padding: 20px;
-    max-width: 1100px;
-    margin-left: auto;
-    margin-right: auto;
+margin-top: 100px; 
+padding: 100px 20px;
+max-width: 935px;
+margin-left: auto;
+margin-right: auto;
 }
 
-/* ▼▼▼ 글쓰기 페이지 폼 스타일 (수정됨) ▼▼▼ */
+/* 2. 기존 흰색 박스 스타일 */
 .write-form-container {
   max-width: 1100px;
   margin: 0 auto;
   padding: 30px;
   background-color: #ffffff;
   border: 1px solid #dbdbdb;
-  border-radius: 12px;
+
 }
 
 .write-form-container h2 {
@@ -36,45 +36,51 @@
   font-size: 14px;
 }
 
-.form-group input[type="text"],
-.form-group textarea {
+.form-group input[type="text"]{
   width: 100%;
   padding: 12px 16px;
   border: 1px solid #dbdbdb;
-  border-radius: 8px;
+
   font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: sans-serif;
 }
+.form-group textarea{
+  width: 100%;
+ 
+
+  font-size: 16px;
+  font-family: sans-serif;
+}
+
+
 
 .form-group input[type="text"]:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
 }
 
-/* --- 1. 음악 & 앨범표지 (신규) --- */
+/* --- 1. 음악 & 앨범표지 --- */
 .music-and-art-wrapper {
   display: flex;
   gap: 20px;
-  align-items: flex-start; /* 위쪽 정렬 */
+  align-items: flex-start;
 }
 
 /* 1-1. 앨범 표지 컨테이너 */
 .album-art-container {
-  flex-basis: 150px; /* 150px 고정 너비 */
+  flex-basis: 150px; 
   flex-shrink: 0;
 }
 .album-art-placeholder {
-  width: 150px;
-  height: 150px;
-  background-color: #004A95; /* 이미지의 진한 파란색 */
+  width: 200px;
+  height: 200px;
+  background-color: #505050; 
   color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+
   font-size: 14px;
   font-weight: 500;
   text-align: center;
@@ -85,17 +91,17 @@
   opacity: 0.7;
 }
 .selected-album-art {
-  width: 150px;
-  height: 150px;
-  border-radius: 8px;
+  width: 200px;
+  height: 200px;
+
   object-fit: cover;
   border: 1px solid #dbdbdb;
 }
 
 /* 1-2. 음악 선택 컨테이너 */
 .music-select-container {
-  flex: 1; /* 남는 공간 모두 차지 */
-  min-width: 0; /* flex 아이템이 줄어들 수 있게 함 */
+  flex: 1; 
+  min-width: 0;
 }
 
 .music-search-box {
@@ -105,27 +111,37 @@
 .music-search-box input {
   flex: 1;
 }
-.music-search-box button {
+
+/* ⭐️ "검색" / "변경" 버튼 공통 스타일 */
+.form-button {
   padding: 0 20px;
   border: none;
   background-color: #505050;
   color: white;
-  border-radius: 8px;
+
   cursor: pointer;
   font-weight: 600;
+  height: 46px; /* input 높이와 맞춤 */
+  flex-shrink: 0; /* 버튼 찌그러짐 방지 */
 }
-.music-search-box button:disabled {
+.form-button:disabled {
   background-color: #ccc;
 }
+.form-button:hover {
+  background-color: #333;
+}
 
+
+/* ⭐️ 검색 결과 (스크롤 적용) */
 .search-results-list {
   list-style: none;
   padding: 0;
   margin: 10px 0 0;
   border: 1px solid #dbdbdb;
-  border-radius: 8px;
-  max-height: 150px;
-  overflow-y: auto;
+
+  
+  max-height: 140px; /* ⭐️ 최대 높이 지정 (약 3개 항목) */
+  overflow-y: auto;  /* ⭐️ 내용이 넘치면 스크롤 */
 }
 .search-results-list li {
   padding: 10px 14px;
@@ -138,89 +154,70 @@
 .search-results-list li:hover {
   background-color: #f9f9f9;
 }
+/* ⭐️ 검색 결과 없을 때 */
+.search-results-list .no-results {
+  padding: 10px 14px;
+  color: #888;
+  font-style: italic;
+  cursor: default;
+}
+.search-results-list .no-results:hover {
+  background-color: transparent;
+}
+
 
 .selected-song {
   display: flex;
-  flex-direction: column; /* 세로로 배치 */
-  align-items: flex-start; /* 왼쪽 정렬 */
-  gap: 10px;
-  background-color: #f5f5f5;
-  padding: 12px 16px;
-  border-radius: 8px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px; /* 버튼과의 간격 */
+  
+  padding: 0 16px; /* 높이를 버튼과 맞추기 위해 패딩 조절 */
+
+  height: 46px; /* 버튼 높이와 맞춤 */
 }
 .selected-song .song-info {
   font-size: 16px;
+  /* (한 줄로 표시하고 넘치면 ... 처리) */
+  white-space: nowrap;
+  overflow: hidden;
+  
+  width: 600px;
+  padding: auto;
+  text-overflow: ellipsis;
+  
 }
 .selected-song .song-info strong {
-  color: #004A95; /* 이미지의 진한 파란색 */
+  color: #505050; 
   font-size: 18px;
-}
-.change-btn {
-  background: none;
-  border: 1px solid #dbdbdb;
-  color: #505050;
-  border-radius: 5px;
-  padding: 4px 10px;
-  font-size: 12px;
-  cursor: pointer;
-}
-.change-btn:hover {
-  background-color: #e0e0e0;
+  margin-right: 5px;
+  
 }
 
+
+
 /* --- 2. 한줄소개 (밑줄 스타일) --- */
-/* (기본 input 스타일을 덮어씁니다) */
 #memory-line {
   border: none;
-  border-bottom: 2px solid #505050;
-  border-radius: 0;
+  border-bottom: 2px solid #bfbfbf;
+
   padding: 12px 0;
 }
 #memory-line:focus {
   box-shadow: none;
-  border-color: #667eea;
+  border-color: #505050;
 }
 
 
-/* --- 4. 사진 업로드 스타일 --- */
-.file-upload-wrapper input[type="file"] {
-  display: none; 
-}
-.file-upload-box {
-  border: 2px dashed #dbdbdb;
-  border-radius: 8px;
-  padding: 30px;
-  text-align: center;
-  cursor: pointer;
-  background-color: #fafafa;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 150px;
-}
-.file-upload-box:hover {
-  background-color: #f0f0f0;
-  border-color: #c0c0c0;
-}
-.file-upload-box span {
-  font-size: 40px;
-  color: #888;
-  line-height: 1;
-}
-.file-upload-box p {
-  margin: 10px 0 0;
-  color: #888;
-  font-weight: 500;
-}
-.image-preview {
-  width: 100%;
-  height: auto;
-  max-height: 300px;
-  border-radius: 8px;
-  object-fit: cover;
-}
 
+.form-group input[id="tag-input"],
+.form-group input[id="memory-line-input"] {
+    border: none;
+    border-bottom: 2px solid #505050;
+    border-radius: 0;
+    padding: 12px 0 10px;
+    width: 100%;
+}
 
 /* 제출 버튼 */
 .submit-btn {

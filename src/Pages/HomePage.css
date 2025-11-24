@@ -1,0 +1,107 @@
+@import "tailwindcss";  
+.main-content {
+    margin-top: 160px;
+    padding: 20px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 격자 레이아웃 */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.write-btn {
+ position: fixed;
+ bottom: 30px;
+ right: 13%;
+ width: 60px;
+ height: 60px;
+  border-radius: 20px;
+  border: none;
+  background-color: #505050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.123);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s;
+  z-index: 10px
+}
+.write-btn::before {
+  content: "";
+  width: 200%;
+  height: 200%;
+  background-color: #111111;
+  position: absolute;
+  z-index: 1;
+  transform: scale(0);
+  transition: all 0.3s;
+  border-radius: 50%;
+  filter: blur(10px);
+}
+.write-btn:hover::before {
+  transform: scale(1);
+}
+.write-btn:hover {
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.336);
+}
+
+.write-btn svg {
+  height: 17px;
+  fill: white;
+  z-index: 3;
+  transition: all 0.2s;
+  transform-origin: bottom;
+}
+.write-btn:hover svg {
+  transform: rotate(-15deg) translateX(5px);
+}
+.write-btn::after {
+  content: "";
+  width: 25px;
+  height: 1.5px;
+  position: absolute;
+  bottom: 19px;
+  left: -5px;
+  background-color: white;
+  border-radius: 2px;
+  z-index: 2;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease-out;
+}
+.write-btn:hover::after {
+  transform: scaleX(1);
+  left: 0px;
+  transform-origin: right;
+}
+
+/* 글쓰기 버튼이 고정일 때 */
+.write-btn.fixed {
+  position: fixed;
+  bottom: 30px;
+  right: 13%;
+}
+
+/* footer 위에서 멈출 때 */
+.write-btn.absolute {
+  position: absolute;
+  bottom:5px; /* footer 위 간격 조정 */
+  right: 13%;
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+            
+    .main-content {
+        padding: 10px;
+    }
+}

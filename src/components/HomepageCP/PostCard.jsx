@@ -1,3 +1,4 @@
+import './HomepageCPcss/PostCard.css';
 const PostCard = ({ post, onSaveToggle }) => {
   const handleSaveClick = (e) => {
     e.stopPropagation(); // 이벤트 버블링 방지

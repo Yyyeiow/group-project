@@ -1,0 +1,113 @@
+/* --- 메인 컨테이너 --- */
+.richtext-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+}
+
+/* --- 이미지 업로드 버튼 --- */
+.upload-btn {
+  padding: 10px 16px;
+  background-color: #505050; 
+  color: white;
+  border: none;
+
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s;
+  align-self: center; 
+}
+
+.upload-btn:hover {
+  background-color: #333;
+}
+
+.hidden {
+  display: none;
+}
+
+/* --- 이미지 미리보기 그리드 --- */
+.image-preview-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.image-preview-box {
+  position: relative;
+  width: 100%;
+  /* 1:1 비율의 정사각형 (사용자 이미지 참고) */
+  aspect-ratio: 1 / 1;
+}
+
+.image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #dbdbdb; 
+}
+
+
+.remove-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  padding: 3px 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.remove-btn:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.represent-btn {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid #fff; 
+  background-color: rgba(0, 0, 0, 0.6); 
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.represent-btn:not(.active):hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.represent-btn.active {
+  background-color: #505050; 
+  color: white;
+  border-color: #505050;
+}
+
+
+.editor-textarea {
+  width: 100%;
+  min-height: 250px; 
+  padding: 12px 16px;
+  font-size: 16px; 
+  font-family: sans-serif;
+  border-radius: 4px;
+  border: 1px solid #dbdbdb;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.editor-textarea:focus {
+  border-color: #505050;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(80, 80, 80, 0.1);
+}

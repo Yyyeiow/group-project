@@ -1,0 +1,29 @@
+.footer-container {
+ 
+  text-align: center;
+  padding: 80px;
+  background-color: #505050; 
+  border-top: 1px solid #dbdbdb;
+
+  line-height: 1.6;
+}
+
+.footer-container p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #f1f1f1;
+}
+
+.footer-container p:first-child {
+  font-weight: 500;
+}
+
+.footer-container a {
+  color: #667eea; 
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-container a:hover {
+  text-decoration: underline;
+}

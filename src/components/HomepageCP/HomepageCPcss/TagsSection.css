@@ -1,0 +1,54 @@
+@import "tailwindcss";  
+
+.tags-section {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 12px 0;
+    border-bottom: 1px solid #dbdbdb;
+    overflow: hidden; 
+    white-space: nowrap;
+    z-index: 99;
+}
+
+.tags-wrapper {
+    display: flex; 
+    animation: scroll-tags 40s linear infinite; 
+}
+
+
+.tags-container {
+    display: flex; 
+    flex-shrink: 0; 
+    white-space: nowrap;
+}
+
+
+.tags-wrapper:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-tags {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.tag {
+    display: inline-block;
+    padding: 6px 16px;
+    background: #f0f0f0;
+    border-radius: 20px;
+    margin-right: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.tag:hover {
+    background: #e0e0e0;
+}
