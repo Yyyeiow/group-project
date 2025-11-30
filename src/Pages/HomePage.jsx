@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"; // 페이지 이동
 import TagsSection from "../components/HomepageCP/TagsSection";
 import PostCard from "../components/HomepageCP/PostCard";
 import Pagination from "../components/HomepageCP/Pagination";
+import Popup from "../components/HomepageCP/Popup";
 import "./HomePage.css";
 
 const initialGridItems = [
@@ -69,9 +70,10 @@ function HomePage() {
   const totalPages = Math.ceil(gridItems.length / itemsPerPage);
 
   return (
+    
     <main className="main-content">
       <TagsSection />
-
+      <Popup /> 
       <div className="grid-container">
         {currentItems.map((item) =>
           item.type === "post" ? (
