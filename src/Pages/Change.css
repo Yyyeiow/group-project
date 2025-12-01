@@ -79,7 +79,7 @@
 /* 완료 버튼 */
 .edit-submit-btn {
   padding: 12px 20px;
-  background: #0095f6;
+  background: #505050;
   color: white;
   border: none;
   border-radius: 8px;
@@ -88,6 +88,6 @@
 }
 
 .edit-submit-btn:hover {
-  background: #007acc;
+  background: #202020;
 }
 

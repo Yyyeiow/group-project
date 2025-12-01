@@ -68,12 +68,12 @@ function Signup() {
     }
 
     try {
-      // 실제 구현 시 이메일 전송 API 호출
+      // 구현 시 이메일 전송 API 호출
       const code = String(Math.floor(100000 + Math.random() * 900000));
       setSentCode(code);
       setMessage(`인증번호가 전송되었습니다.`);
 
-      // 3분 타이머
+      // 타이머
       setTimer(180);
       if (intervalId) clearInterval(intervalId);
 
@@ -93,7 +93,7 @@ function Signup() {
     }
   };
 
-  // 회원가입 제출
+  // 회원가입
   const handleSubmit = async (e) => {
     e.preventDefault();
 

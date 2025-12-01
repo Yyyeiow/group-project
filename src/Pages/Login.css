@@ -52,14 +52,14 @@ body {
   color: #505050;
 }
 
-/* 파란색 버튼 */
+/* 버튼 */
 .login-btn {
   width: 100%;
   margin-top: 20px;
   padding: 12px 0;
   border-radius: 25px;
   border: none;
-  background: #4ea1ff;
+  background: #505050;
   color: #fff;
   font-size: 18px;
   font-family: inherit;
@@ -69,7 +69,7 @@ body {
 }
 
 .login-btn:hover {
-  background: #3d8ee0;
+  background: #505050;
 }
 
 .signup-text {
@@ -79,6 +79,6 @@ body {
 }
 
 .signup-text a {
-  color: #5a8cff;
+  color: #505050;
   text-decoration: none;
 }

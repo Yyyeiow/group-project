@@ -76,7 +76,7 @@ font-size: 14px;
 }
 
 .gender-wrap .active {
-border-color: #3d8bff;
+border-color: #505050;
 background: #eaf1ff;
 }
 
@@ -84,7 +84,7 @@ background: #eaf1ff;
 .signup-btn {
 width: 100%;
 padding: 14px;
-background: #3d8bff;
+background: #505050;
 color: white;
 border: none;
 border-radius: 8px;
