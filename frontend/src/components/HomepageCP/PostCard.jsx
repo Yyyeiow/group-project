@@ -1,17 +1,34 @@
+import { useNavigate } from 'react-router-dom';
 import './HomepageCPcss/PostCard.css';
+
 const PostCard = ({ post, onSaveToggle }) => {
+  const navigate = useNavigate();
+
   const handleSaveClick = (e) => {
     e.stopPropagation(); // 이벤트 버블링 방지
     onSaveToggle(post.id);
   };
 
+  const handleCardClick = () => {
+    // 게시물 상세 페이지로 이동 (아직 페이지가 없으면 alert)
+    alert(`게시물 ${post.id} 상세 페이지 (아직 구현 안됨)`);
+    // navigate(`/post/${post.id}`); // 상세 페이지 구현 후 활성화
+  };
+
   const musicInfoTextClass = `music-info-text ${post.overflow ? 'overflow' : ''}`;
   const uniqueId = `heart-${post.id}`;
 
+  // 이미지 URL 결정: 앨범 커버 우선! (Spotify 이미지는 외부 URL)
+  const imageUrl = post.albumImageUrl;
+
   return (
-    <div className="post-card" onClick={() => alert('게시물 상세 페이지로 이동')}>
-      <div className="post-image">
-        사진
+    <div className="post-card" onClick={handleCardClick}>
+      <div className="post-image" style={{
+        backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}>
+        {!imageUrl && <div style={{padding: '20px', textAlign: 'center'}}>이미지 없음</div>}
         <div className="post-description">{post.description}</div>
       </div>
       <div className="post-info">
@@ -42,7 +59,7 @@ const PostCard = ({ post, onSaveToggle }) => {
           <label className="like" htmlFor={uniqueId} onClick={(e) => e.stopPropagation()}>
             <svg
               className="like-icon"
-              fill-rule="nonzero"
+              fillRule="nonzero"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >

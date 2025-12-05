@@ -1,4 +1,4 @@
-package main.java.com.musicismylife.backend.dto;
+package com.musicismylife.backend.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,29 +9,33 @@ import java.util.List;
 
 @Getter @Setter
 public class PostRequestDto {
-    // 프론트에서 보내는 필드명 그대로
-    @NotBlank(message = "내용은 필수입니다")
-    private String content;  // 본문 전체
-    
-    // Spotify 노래 정보 (song 객체에서 추출)
-    @NotBlank(message = "Spotify 트랙 ID는 필수입니다")
+    // Post summary (title shown on cards)
+    @NotBlank(message = "Description is required")
+    private String description;
+
+    // Full post content
+    @NotBlank(message = "Content is required")
+    private String content;
+
+    // Spotify track info
+    @NotBlank(message = "Spotify track ID is required")
     private String spotifyTrackId;
-    
-    @NotBlank(message = "노래 제목은 필수입니다")
+
+    @NotBlank(message = "Track title is required")
     private String title;
-    
-    @NotBlank(message = "아티스트 이름은 필수입니다")
+
+    @NotBlank(message = "Artist name is required")
     private String artist;
-    
+
     private String albumImageUrl;
-    
-    // 이미지 정보
+
+    // Image information
     @NotNull
-    @Size(min = 1, max = 3, message = "이미지는 1~3장 업로드 가능합니다")
+    @Size(min = 1, max = 3, message = "Upload between 1 and 3 images")
     private List<String> imageUrls;
-    
+
     private String representImageUrl;
-    
-    // 태그
+
+    // Tags
     private List<String> tags;
 }

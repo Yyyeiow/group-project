@@ -5,35 +5,65 @@ import TagsSection from "../components/HomepageCP/TagsSection";
 import PostCard from "../components/HomepageCP/PostCard";
 import Pagination from "../components/HomepageCP/Pagination";
 import Popup from "../components/HomepageCP/Popup";
+import { getPosts } from "../api/api"; // 백엔드 API 가져오기
 import "./HomePage.css";
 
-const initialGridItems = [
-  { type: 'post', id: 1, saved: false, description: "새벽 감성이 물씬 풍기는 노래", artist: "아이유", title: "밤편지", overflow: false },
-  { type: 'post', id: 2, saved: false, description: "드라이브하면서 듣기 딱 좋은 곡", artist: "너드커넥션", title: "구름 위를 걷는 기분이에요 정말 좋아요", overflow: true },
-  { type: 'post', id: 3, saved: false, description: "비 오는 날 듣고 싶은 노래", artist: "에픽하이", title: "우산", overflow: false },
-  { type: 'post', id: 4, saved: false, description: "운동할 때 텐션 올리기 좋음", artist: "BTS", title: "불타오르네", overflow: false },
-  { type: 'post', id: 5, saved: false, description: "카페에서 작업할 때 최고", artist: "이적", title: "다행이다", overflow: false },
-  { type: 'post', id: 6, saved: false, description: "힘들 때 위로가 되는 노래", artist: "10cm", title: "폰서트", overflow: false },
-  { type: 'post', id: 7, saved: false, description: "새벽 감성이 물씬 풍기는 노래", artist: "아이유", title: "밤편지", overflow: false },
-  { type: 'post', id: 8, saved: false, description: "드라이브하면서 듣기 딱 좋은 곡", artist: "너드커넥션", title: "구름 위를 걷는 기분이에요 정말 좋아요", overflow: true },
-  { type: 'post', id: 9, saved: false, description: "비 오는 날 듣고 싶은 노래", artist: "에픽하이", title: "우산", overflow: false },
-  { type: 'post', id: 10, saved: false, description: "운동할 때 텐션 올리기 좋음", artist: "BTS", title: "불타오르네", overflow: false },
-  { type: 'post', id: 11, saved: false, description: "카페에서 작업할 때 최고", artist: "이적", title: "다행이다", overflow: false },
-  { type: 'post', id: 12, saved: false, description: "힘들 때 위로가 되는 노래", artist: "10cm", title: "폰서트", overflow: false },
-  { type: 'post', id: 13, saved: false, description: "새벽 감성이 물씬 풍기는 노래", artist: "아이유", title: "밤편지", overflow: false },
-  { type: 'post', id: 14, saved: false, description: "드라이브하면서 듣기 딱 좋은 곡", artist: "너드커넥션", title: "구름 위를 걷는 기분이에요 정말 좋아요", overflow: true },
-  { type: 'post', id: 15, saved: false, description: "비 오는 날 듣고 싶은 노래", artist: "에픽하이", title: "우산", overflow: false },
-  { type: 'post', id: 16, saved: false, description: "운동할 때 텐션 올리기 좋음", artist: "BTS", title: "불타오르네", overflow: false },
-  { type: 'post', id: 17, saved: false, description: "카페에서 작업할 때 최고", artist: "이적", title: "다행이다", overflow: false },
-  { type: 'post', id: 18, saved: false, description: "힘들 때 위로가 되는 노래", artist: "10cm", title: "폰서트", overflow: false }
-];
-
 function HomePage() {
-  const [gridItems, setGridItems] = useState(initialGridItems);
-  const [currentPage, setCurrentPage] = useState(1);
+  // 📝 State (데이터 저장소)
+  const [gridItems, setGridItems] = useState([]); // 게시물 목록
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 (1부터 시작)
+  const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
+  const [isLoading, setIsLoading] = useState(false); // 로딩 중인지
   const [isFixed, setIsFixed] = useState(true); 
   const navigate = useNavigate();
   const itemsPerPage = 9;
+
+  /**
+   * 📥 백엔드에서 게시물 목록 가져오기
+   * 
+   * useEffect는 React에서 "페이지가 로드될 때" 또는 "특정 값이 바뀔 때" 
+   * 자동으로 실행되는 코드 블록입니다!
+   */
+  useEffect(() => {
+    loadPosts();
+  }, [currentPage]); // currentPage가 바뀔 때마다 실행!
+
+  /**
+   * 🔄 게시물 불러오기 함수
+   */
+  const loadPosts = async () => {
+    setIsLoading(true);
+
+    try {
+      // 백엔드에 게시물 요청 (페이지는 0부터 시작!)
+      const data = await getPosts(currentPage - 1, itemsPerPage);
+      
+      console.log("받은 게시물 데이터:", data);
+
+      // 백엔드 데이터를 프론트엔드 형식으로 변환
+      const formattedPosts = data.content.map(post => ({
+        type: 'post',
+        id: post.id,
+        saved: false, // 저장 기능은 나중에 추가
+        description: post.description, // 한 줄 요약
+        artist: post.artist, // 아티스트 이름 (백엔드는 artist로 반환!)
+        title: post.title, // 노래 제목 (백엔드는 title로 반환!)
+        albumImageUrl: post.albumImageUrl, // 앨범 커버
+        representImageUrl: post.representImageUrl, // 대표 이미지
+        overflow: post.title && post.title.length > 20 // 제목이 길면 overflow (null 체크)
+      }));
+
+      setGridItems(formattedPosts);
+      setTotalPages(data.totalPages || 1);
+
+    } catch (error) {
+      console.error("게시물 로딩 에러:", error);
+      // 에러 발생 시 빈 배열 표시
+      setGridItems([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSaveToggle = (postId) => {
     setGridItems((prevItems) =>
@@ -64,33 +94,52 @@ function HomePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = gridItems.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(gridItems.length / itemsPerPage);
+  // ⚠️ 페이지네이션은 백엔드에서 처리하므로 slice 불필요!
+  // gridItems는 이미 백엔드에서 페이징 처리된 9개 데이터
+  const currentItems = gridItems;
 
   return (
     
     <main className="main-content">
       <TagsSection />
       <Popup /> 
-      <div className="grid-container">
-        {currentItems.map((item) =>
-          item.type === "post" ? (
-            <PostCard
-              key={item.id}
-              post={item}
-              onSaveToggle={handleSaveToggle}
-            />
-          ) : null
-        )}
-      </div>
+      
+      {/* 로딩 중일 때 표시 */}
+      {isLoading && (
+        <div style={{ textAlign: 'center', padding: '40px' }}>
+          <p>게시물을 불러오는 중...</p>
+        </div>
+      )}
 
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
+      {/* 게시물이 없을 때 표시 */}
+      {!isLoading && gridItems.length === 0 && (
+        <div style={{ textAlign: 'center', padding: '40px' }}>
+          <p>게시물이 없습니다. 첫 번째 게시물을 작성해보세요!</p>
+        </div>
+      )}
+
+      {/* 게시물 목록 */}
+      {!isLoading && gridItems.length > 0 && (
+        <>
+          <div className="grid-container">
+            {currentItems.map((item) =>
+              item.type === "post" ? (
+                <PostCard
+                  key={item.id}
+                  post={item}
+                  onSaveToggle={handleSaveToggle}
+                />
+              ) : null
+            )}
+          </div>
+
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        </>
+      )}
       <button
         className={`write-btn ${isFixed ? "fixed" : "absolute"}`}
         onClick={() => navigate("/write")}

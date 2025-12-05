@@ -33,7 +33,7 @@ export default function Popup() {
 
   return (
     <>
-      {isOpen && (
+      {isOpen && imageUrl && (
         <div className="modal-backdrop">
           <div className="modal">
             <img src={imageUrl} alt="웃긴 사진" className="funny-image" />

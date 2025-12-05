@@ -1,6 +1,6 @@
-package main.java.com.musicismylife.backend.domain;
+package com.musicismylife.backend.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

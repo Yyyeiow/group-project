@@ -1,6 +1,6 @@
-package main.java.com.musicismylife.backend.domain;
+package com.musicismylife.backend.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Post {
     @Id
-    @Generated(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -41,6 +41,13 @@ public class Post {
     // 사진 URL 리스트 //
     @ElementCollection
     private List<String> imageUrls = new ArrayList<>();
+
+    // 대표 이미지 URL //
+    private String representImageUrl;
+
+    // 태그 리스트 //
+    @ElementCollection
+    private List<String> tags = new ArrayList<>();
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;  // 생성 시간

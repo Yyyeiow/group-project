@@ -1,4 +1,4 @@
-package main.java.com.musicismylife.backend.repository;
+package com.musicismylife.backend.repository;
 
 import com.musicismylife.backend.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,3 +21,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
 
 }
+

@@ -1,4 +1,4 @@
-package main.java.com.musicismylife.backend.dto;
+package com.musicismylife.backend.dto;
 
 import com.musicismylife.backend.domain.Post;
 import lombok.Getter;
@@ -9,11 +9,11 @@ import java.util.List;
 public class PostResponseDto {
     
     private Long id;
-    private String description; // 한 줄 요약(제목)
-    private String artist;      // 아티스트 이름
-    private String title;    // 트랙 이름
+    private String description; // ??繞???븐슜????類쏄콬)
+    private String artist;      // ?熬곥굥堉???덈콦 ???藥?
+    private String title;    // ?筌뤾퍔?????藥?
 
-    // 게시물 내용
+    // ?롪퍓???삳닱???怨몃뮔
     private String content;
     private String authorUsername;
     private String spotifyTrackId;
@@ -31,11 +31,11 @@ public class PostResponseDto {
 
     public PostResponseDto(Post post) {
         this.id = post.getId();
-        this.description = extractDescription(post.getContent()); // 본문에서 첫 50자 추출
+        this.description = post.getDescription(); // 게시물의 한 줄 요약 필드 사용!
         this.artist = post.getArtistName();
         this.title = post.getTrackName();
         
-        // 게시물 내용
+        // ?롪퍓???삳닱???怨몃뮔
         this.content = post.getContent();
         this.authorUsername = post.getAuthor().getUsername();
         this.spotifyTrackId = post.getSpotifyTrackId();
