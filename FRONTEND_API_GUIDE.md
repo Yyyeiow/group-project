@@ -626,6 +626,273 @@ fetch('http://localhost:8080/api/spotify/search?query=BTS')
 
 ---
 
+## ✅ 이미 구현된 프론트엔드 파일들
+
+백엔드 연동이 **완료된** 파일들입니다. 참고해서 작업하세요!
+
+### 📁 `src/api/api.js` (중앙 API 관리 파일)
+
+**모든 백엔드 API를 한 곳에서 관리하는 파일입니다.**
+
+주요 기능:
+- JWT 토큰 자동 관리 (localStorage)
+- 401 에러 시 자동 로그인 페이지 이동
+- 모든 요청에 Authorization 헤더 자동 추가
+
+**사용 가능한 함수들:**
+```javascript
+// 인증
+import { signup, login, logout } from '../api/api';
+
+// Spotify
+import { searchMusic, getTrackDetails } from '../api/api';
+
+// 이미지 업로드
+import { uploadImages } from '../api/api';
+
+// 게시물
+import { getPosts, getPost, createPost, updatePost, deletePost, getPostsByTag } from '../api/api';
+```
+
+**사용 예시:**
+```javascript
+// 로그인
+const data = await login('yeonwoo', 'password123');
+// 자동으로 localStorage에 token 저장됨!
+
+// 게시물 목록
+const posts = await getPosts(0, 9); // 0페이지, 9개씩
+
+// 게시물 작성 (자동으로 토큰 포함)
+const newPost = await createPost({
+  description: "한 줄 요약",
+  content: "본문 내용",
+  spotifyTrackId: "abc123",
+  title: "노래 제목",
+  artist: "아티스트",
+  albumImageUrl: "https://...",
+  representImageUrl: "/uploads/images/xxx.jpg",
+  imageUrls: ["/uploads/images/xxx.jpg"],
+  tags: ["힙합", "신나는"]
+});
+```
+
+---
+
+### 📁 `src/Pages/LoginPage.jsx` (로그인 페이지)
+
+**완료된 기능:**
+- ✅ username, password 입력
+- ✅ 백엔드 `/api/auth/login` 연동
+- ✅ JWT 토큰 localStorage 저장
+- ✅ 로그인 성공 시 홈페이지 이동
+- ✅ Enter 키 지원
+- ✅ 로딩 상태 표시
+
+**주요 코드:**
+```javascript
+const handleLogin = async () => {
+  const data = await login(username, password);
+  // 토큰은 api.js에서 자동 저장됨!
+  navigate('/');
+};
+```
+
+---
+
+### 📁 `src/Pages/HomePage.jsx` (메인 페이지)
+
+**완료된 기능:**
+- ✅ 백엔드에서 게시물 목록 가져오기
+- ✅ 페이지네이션 (한 페이지당 9개)
+- ✅ 로딩 상태 표시
+- ✅ 빈 화면 처리
+- ✅ Spotify 앨범 커버 표시
+
+**주요 코드:**
+```javascript
+const loadPosts = async () => {
+  const data = await getPosts(currentPage - 1, itemsPerPage);
+  const formattedPosts = data.content.map(post => ({
+    id: post.id,
+    description: post.description, // 한 줄 요약
+    artist: post.artist,
+    title: post.title,
+    albumImageUrl: post.albumImageUrl, // Spotify 앨범 커버
+    // ...
+  }));
+  setGridItems(formattedPosts);
+};
+```
+
+**중요! 백엔드 응답 필드명:**
+- `artist` (O) - `artistName` (X)
+- `title` (O) - `trackName` (X)
+
+---
+
+### 📁 `src/components/HomepageCP/PostCard.jsx` (게시물 카드)
+
+**완료된 기능:**
+- ✅ Spotify 앨범 커버를 배경 이미지로 표시
+- ✅ 한 줄 요약(description) 표시
+- ✅ 클릭 시 상세 페이지 이동 준비 (아직 페이지 미구현)
+
+**주요 코드:**
+```javascript
+// 앨범 커버를 배경으로 사용!
+const imageUrl = post.albumImageUrl;
+
+<div className="post-image" style={{
+  backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center'
+}}>
+  <div className="post-description">{post.description}</div>
+</div>
+```
+
+**주의사항:**
+- `albumImageUrl`은 Spotify CDN URL이므로 `http://localhost:8080` 붙이면 안됨!
+- `representImageUrl`은 백엔드 URL이므로 `http://localhost:8080` 필요
+
+---
+
+### 📁 `src/Pages/WritePage.jsx` (게시물 작성)
+
+**완료된 기능:**
+- ✅ 노래 검색 및 선택 (MusicSelector)
+- ✅ 한 줄 요약 입력 (MemoryLineInput)
+- ✅ 본문 내용 입력 (RichTextEditor)
+- ✅ 이미지 업로드 및 대표 이미지 선택
+- ✅ 태그 입력 (TagInput)
+- ✅ 필수 항목 체크 (노래, 한 줄 요약, 대표 이미지)
+- ✅ 순차 처리: 이미지 업로드 → 게시물 작성
+- ✅ 성공 시 홈페이지 이동
+
+**주요 코드:**
+```javascript
+const [memoryLine, setMemoryLine] = useState(""); // 한 줄 요약!
+
+const handleSubmit = async () => {
+  // 1. 이미지 업로드
+  const uploadedUrls = await uploadImages(imageFiles);
+  
+  // 2. 게시물 데이터 구성
+  const postData = {
+    description: memoryLine, // 한 줄 요약 (카드에 표시!)
+    content: content, // 본문 전체
+    spotifyTrackId: selectedSong.id,
+    title: selectedSong.title,
+    artist: selectedSong.artist,
+    albumImageUrl: selectedSong.albumArtUrl,
+    representImageUrl: uploadedUrls[0],
+    imageUrls: uploadedUrls,
+    tags: tags // 배열 그대로!
+  };
+  
+  // 3. 게시물 생성
+  await createPost(postData);
+  navigate('/');
+};
+```
+
+**중요! 백엔드 필드명 매칭:**
+```javascript
+// 프론트 → 백엔드
+description     // 한 줄 요약 (필수!)
+content         // 본문 내용
+spotifyTrackId  // Spotify 트랙 ID
+title           // 노래 제목
+artist          // 아티스트 이름
+albumImageUrl   // 앨범 커버
+representImageUrl // 대표 이미지
+imageUrls       // 배열
+tags            // 배열 ["힙합", "신나는"]
+```
+
+---
+
+### 📁 `src/components/WritepageCP/MusicSelector.jsx` (음악 검색)
+
+**완료된 기능:**
+- ✅ Spotify API 실시간 검색
+- ✅ 검색 결과를 카드 형태로 표시
+- ✅ 선택한 노래 하이라이트
+
+**주요 코드:**
+```javascript
+const handleMusicSearch = async () => {
+  const data = await searchMusic(searchQuery);
+  
+  // 백엔드 → 프론트 데이터 변환
+  const formattedResults = data.map(track => ({
+    id: track.trackId,
+    title: track.trackName,
+    artist: track.artistName,
+    albumArtUrl: track.albumImageUrl
+  }));
+  
+  setSearchResults(formattedResults);
+};
+```
+
+---
+
+### 📁 `src/components/WritepageCP/MemoryLineInput.jsx` (한 줄 요약)
+
+**완료된 기능:**
+- ✅ 한 줄 요약 입력 필드
+- ✅ WritePage와 state 연결
+
+**사용법:**
+```javascript
+const [memoryLine, setMemoryLine] = useState("");
+
+<MemoryLineInput memoryLine={memoryLine} setMemoryLine={setMemoryLine} />
+```
+
+---
+
+## 🚨 주의사항
+
+### 1. 필드명 불일치 주의!
+
+**백엔드 응답 (PostResponseDto):**
+```json
+{
+  "artist": "NCT 127",      // artistName (X)
+  "title": "Fact Check"     // trackName (X)
+}
+```
+
+### 2. 이미지 URL 처리
+
+```javascript
+// Spotify 앨범 커버 (외부 URL)
+<img src={post.albumImageUrl} />  // http://localhost:8080 붙이면 안됨!
+
+// 업로드한 이미지 (백엔드 URL)
+<img src={`http://localhost:8080${post.representImageUrl}`} />
+```
+
+### 3. 태그는 배열로 전송!
+
+```javascript
+// ❌ 잘못된 방법
+tags: tags.join(",")  // "힙합,신나는"
+
+// ✅ 올바른 방법
+tags: tags  // ["힙합", "신나는"]
+```
+
+### 4. description vs content
+
+- `description`: 한 줄 요약 (카드에 표시되는 짧은 텍스트)
+- `content`: 본문 전체 (상세 페이지에 표시될 긴 텍스트)
+
+---
+
 ## 📞 문의사항
 
 백엔드 담당자에게 물어보세요! 😊
