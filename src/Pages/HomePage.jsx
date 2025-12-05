@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // 페이지 이동
+import { useNavigate } from "react-router-dom"; 
 import TagsSection from "../components/HomepageCP/TagsSection";
 import PostCard from "../components/HomepageCP/PostCard";
 import Pagination from "../components/HomepageCP/Pagination";

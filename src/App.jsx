@@ -6,6 +6,8 @@ import Footer from "./components/Footer";
 import HomePage from "./Pages/HomePage";  
 import WritePage from "./Pages/WritePage"; 
 import LoginPage from "./Pages/LoginPage";
+import MyPage from "./Pages/MyPage";
+import ChangeId from "./Pages/ChangeId";
 import "./App.css"; 
 
 function App() {
@@ -17,8 +19,10 @@ function App() {
         <Route path="/" element={<HomePage />} />        
         <Route path="/write" element={<WritePage />} />  
         <Route path="/login" element={<LoginPage />}/>
+        <Route path="/mypage" element={<MyPage />}/>
+        <Route path="/changeid" element={<ChangeId />}/>
       </Routes>
-      <Footer /> {/* 모든 페이지 하단 공통 */}
+      <Footer /> 
     </Router>
   );
 }
