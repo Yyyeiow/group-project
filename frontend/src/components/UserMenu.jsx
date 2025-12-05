@@ -1,11 +1,26 @@
 // UserMenu.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserMenu.css'; 
+import { getMyInfo } from '../api/api';
 
 const UserMenu = ({ onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    loadUserInfo();
+  }, []);
+
+  const loadUserInfo = async () => {
+    try {
+      const userData = await getMyInfo();
+      setUser(userData);
+    } catch (error) {
+      console.error("사용자 정보 로딩 실패:", error);
+    }
+  };
 
   const handleLogoutClick = () => {
 
@@ -41,10 +56,16 @@ const UserMenu = ({ onLogout }) => {
       {isOpen && (
         <div className="dropdown-menu">
           <div className="menu-header">
-            <div className="profile-circle">나연</div>
+            <div className="profile-circle">
+              {user?.profileImageUrl ? (
+                <img src={user.profileImageUrl} alt="프로필" />
+              ) : (
+                user?.username?.substring(0, 2) || "U"
+              )}
+            </div>
             <div className="profile-info">
-              <p className="user-name">윤나연</p>
-              <p className="user-email">yny8225@catholic.ac.kr</p>
+              <p className="user-name">{user?.username || "사용자"}</p>
+              <p className="user-email">{user?.email || ""}</p>
             </div>
           </div>
           

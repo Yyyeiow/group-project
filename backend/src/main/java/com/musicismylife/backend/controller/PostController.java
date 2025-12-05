@@ -181,6 +181,26 @@ public class PostController {
     }
 
     /**
+     * 사용자가 작성한 게시물 조회
+     * GET /api/posts/user/{userId}?page=0&size=9
+     */
+    @GetMapping("/posts/user/{userId}")
+    public ResponseEntity<Page<PostResponseDto>> getPostsByUser(
+            @PathVariable Long userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "9") int size) {
+        
+        try {
+            Page<PostResponseDto> posts = postService.getPostsByUser(userId, page, size);
+            return ResponseEntity.ok(posts);
+            
+        } catch (Exception e) {
+            log.error("사용자 게시물 조회 실패: " + e.getMessage());
+            throw new RuntimeException("사용자 게시물 조회에 실패했습니다.");
+        }
+    }
+
+    /**
      * 태그로 게시물 검색
      * 
      * GET /api/posts/search/tag?tag=힙합&page=0&size=10
@@ -206,6 +226,32 @@ public class PostController {
         }
     }
 
+    /**
+     * 게시물 검색 (아티스트명 또는 곡명)
+     * 
+     * GET /api/posts/search?keyword=BTS&page=0&size=10
+     * 
+     * @param keyword 검색 키워드
+     * @param page 페이지 번호
+     * @param size 페이지 크기
+     * @return 검색 결과 게시물 목록
+     */
+    @GetMapping("/posts/search")
+    public ResponseEntity<Page<PostResponseDto>> searchPosts(
+            @RequestParam String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "9") int size) {
+        
+        try {
+            Page<PostResponseDto> posts = postService.searchPosts(keyword, page, size);
+            return ResponseEntity.ok(posts);
+            
+        } catch (Exception e) {
+            log.error("게시물 검색 실패: " + e.getMessage());
+            throw new RuntimeException("게시물 검색에 실패했습니다: " + e.getMessage());
+        }
+    }
+    
     /**
      * Spotify에서 노래 검색
      * 

@@ -8,6 +8,8 @@ import WritePage from "./Pages/WritePage";
 import LoginPage from "./Pages/LoginPage";
 import MyPage from "./Pages/MyPage";
 import ChangeId from "./Pages/ChangeId";
+import SavedPostsPage from "./Pages/SavedPostsPage";
+import SearchResultPage from "./Pages/SearchResultPage";
 import "./App.css"; 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
         <Route path="/login" element={<LoginPage />}/>
         <Route path="/mypage" element={<MyPage />}/>
         <Route path="/changeid" element={<ChangeId />}/>
+        <Route path="/saved" element={<SavedPostsPage />}/>
+        <Route path="/search" element={<SearchResultPage />}/>
       </Routes>
       <Footer /> 
     </Router>

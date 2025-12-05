@@ -1,0 +1,62 @@
+.saved-posts-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.saved-posts-loading {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 18px;
+  color: #666;
+}
+
+.saved-posts-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.saved-posts-header h1 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 10px 0;
+}
+
+.saved-posts-count {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.no-saved-posts {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.no-saved-posts p {
+  font-size: 18px;
+  color: #999;
+  margin-bottom: 20px;
+}
+
+.no-saved-posts button {
+  padding: 12px 24px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.no-saved-posts button:hover {
+  background: #0056b3;
+}
+
+.saved-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}

@@ -109,17 +109,42 @@ public class AuthController {
 
     /**
      * 내 정보 조회 (로그인 필요)
-     * 
      * GET /api/auth/me
-     * 
-     * @return 로그인된 사용자 정보
-     * 
-     * 참고: Spring Security와 연동하려면 추가 설정이 필요합니다.
-     * 현재는 기본 구조만 작성했습니다.
      */
     @GetMapping("/me")
-    public ResponseEntity<String> getMyInfo() {
-        // TODO: Spring Security와 연동하여 현재 로그인한 사용자 정보 반환
-        return ResponseEntity.ok("로그인 세션 관리는 추후 JWT로 구현 예정");
+    public ResponseEntity<?> getMyInfo(@RequestHeader("Authorization") String authorizationHeader) {
+        try {
+            String token = jwtUtil.extractToken(authorizationHeader);
+            Long userId = jwtUtil.getUserIdFromToken(token);
+            
+            UserResponseDto user = userService.getUserById(userId);
+            return ResponseEntity.ok(user);
+            
+        } catch (Exception e) {
+            log.error("내 정보 조회 실패: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증 실패");
+        }
+    }
+    
+    /**
+     * 프로필 업데이트
+     * PUT /api/auth/profile
+     */
+    @PutMapping("/profile")
+    public ResponseEntity<?> updateProfile(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @RequestBody com.musicismylife.backend.dto.ProfileUpdateDto updateDto
+    ) {
+        try {
+            String token = jwtUtil.extractToken(authorizationHeader);
+            Long userId = jwtUtil.getUserIdFromToken(token);
+            
+            UserResponseDto updated = userService.updateProfile(userId, updateDto);
+            return ResponseEntity.ok(updated);
+            
+        } catch (Exception e) {
+            log.error("프로필 업데이트 실패: " + e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

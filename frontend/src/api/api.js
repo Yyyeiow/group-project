@@ -122,6 +122,22 @@ export const logout = () => {
 };
 
 // ===========================
+// 🔍 게시물 검색 API
+// ===========================
+
+/**
+ * 게시물 검색 (아티스트명 또는 곡명)
+ * 
+ * @param {string} keyword - 검색 키워드
+ * @param {number} page - 페이지 번호 (기본값: 0)
+ * @param {number} size - 페이지 크기 (기본값: 9)
+ * @returns {Promise} - 검색 결과 게시물 목록
+ */
+export const searchPosts = async (keyword, page = 0, size = 9) => {
+  return apiRequest(`/api/posts/search?keyword=${encodeURIComponent(keyword)}&page=${page}&size=${size}`);
+};
+
+// ===========================
 // 🎵 Spotify API
 // ===========================
 
@@ -244,6 +260,18 @@ export const deletePost = async (postId) => {
 };
 
 /**
+ * 사용자가 작성한 게시물 조회
+ * 
+ * @param {number} userId - 사용자 ID
+ * @param {number} page - 페이지 번호
+ * @param {number} size - 한 페이지 크기
+ * @returns {Promise} - 게시물 목록
+ */
+export const getPostsByUser = async (userId, page = 0, size = 9) => {
+  return apiRequest(`/api/posts/user/${userId}?page=${page}&size=${size}`);
+};
+
+/**
  * 태그로 게시물 검색
  * 
  * @param {string} tag - 태그 이름
@@ -253,4 +281,65 @@ export const deletePost = async (postId) => {
  */
 export const getPostsByTag = async (tag, page = 0, size = 9) => {
   return apiRequest(`/api/posts/search/tag?tag=${encodeURIComponent(tag)}&page=${page}&size=${size}`);
+};
+
+// ===========================
+// ❤️ 좋아요(북마크) API
+// ===========================
+
+/**
+ * 좋아요 토글 (추가/취소)
+ * 
+ * @param {number} postId - 게시물 ID
+ * @returns {Promise} - { isLiked, postId }
+ */
+export const toggleLike = async (postId) => {
+  return apiRequest(`/api/likes/${postId}`, {
+    method: 'POST',
+  });
+};
+
+/**
+ * 좋아요 상태 확인
+ * 
+ * @param {number} postId - 게시물 ID
+ * @returns {Promise} - { isLiked, postId }
+ */
+export const checkLikeStatus = async (postId) => {
+  return apiRequest(`/api/likes/${postId}`);
+};
+
+/**
+ * 좋아요한 게시물 목록
+ * 
+ * @returns {Promise} - 좋아요한 게시물 목록
+ */
+export const getLikedPosts = async () => {
+  return apiRequest('/api/likes');
+};
+
+// ===========================
+// 👤 프로필 API
+// ===========================
+
+/**
+ * 내 정보 조회
+ * 
+ * @returns {Promise} - { id, username, email, profileImageUrl, bio }
+ */
+export const getMyInfo = async () => {
+  return apiRequest('/api/auth/me');
+};
+
+/**
+ * 프로필 업데이트
+ * 
+ * @param {object} profileData - { username, profileImageUrl, bio }
+ * @returns {Promise} - 업데이트된 사용자 정보
+ */
+export const updateProfile = async (profileData) => {
+  return apiRequest('/api/auth/profile', {
+    method: 'PUT',
+    body: JSON.stringify(profileData),
+  });
 };

@@ -89,9 +89,85 @@ localStorage.setItem('token', data.token); // 토큰 저장
 
 ---
 
+### 3. 내 정보 조회 (JWT 필요)
+
+**GET** `/api/auth/me`
+
+**Headers:**
+```
+Authorization: Bearer {JWT_TOKEN}
+```
+
+**요청 예시:**
+```javascript
+const token = localStorage.getItem('token');
+const response = await fetch('http://localhost:8080/api/auth/me', {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+});
+```
+
+**응답 예시 (200 OK):**
+```json
+{
+  "id": 1,
+  "username": "yeonwoo",
+  "email": "yeonwoo@example.com",
+  "profileImageUrl": "/uploads/images/profile123.jpg",
+  "bio": "음악을 사랑하는 사람입니다 🎵",
+  "createdAt": "2025-12-05T20:53:03"
+}
+```
+
+---
+
+### 4. 프로필 수정 (JWT 필요)
+
+**PUT** `/api/auth/profile`
+
+**Headers:**
+```
+Authorization: Bearer {JWT_TOKEN}
+Content-Type: application/json
+```
+
+**요청 예시:**
+```json
+{
+  "username": "new_username",
+  "profileImageUrl": "/uploads/images/profile123.jpg",
+  "bio": "새로운 자기소개입니다"
+}
+```
+
+**⚠️ 주의:**
+- 모든 필드는 선택사항입니다 (변경하고 싶은 것만 보내세요)
+- `username`은 다른 사용자와 중복될 수 없습니다
+- `profileImageUrl`은 먼저 이미지를 업로드하고 받은 URL을 사용하세요
+
+**응답 예시 (200 OK):**
+```json
+{
+  "id": 1,
+  "username": "new_username",
+  "email": "yeonwoo@example.com",
+  "profileImageUrl": "/uploads/images/profile123.jpg",
+  "bio": "새로운 자기소개입니다",
+  "createdAt": "2025-12-05T20:53:03"
+}
+```
+
+**에러 예시 (400 Bad Request):**
+```json
+"이미 존재하는 사용자 이름입니다."
+```
+
+---
+
 ## 📤 이미지 업로드 API
 
-### 3. 단일 이미지 업로드
+### 5. 단일 이미지 업로드
 
 **POST** `/api/upload/image`
 
@@ -144,7 +220,7 @@ const uploadImage = async (file) => {
 
 ---
 
-### 4. 여러 이미지 업로드 (최대 3개)
+### 6. 여러 이미지 업로드 (최대 3개)
 
 **POST** `/api/upload/images`
 
@@ -203,7 +279,7 @@ const uploadMultipleImages = async (files) => {
 
 ## 🎵 Spotify API
 
-### 5. 노래 검색
+### 7. 노래 검색
 
 **GET** `/api/spotify/search?query={검색어}`
 
@@ -243,7 +319,7 @@ const searchMusic = async (query) => {
 
 ---
 
-### 6. 트랙 상세 정보
+### 8. 트랙 상세 정보
 
 **GET** `/api/spotify/track/{trackId}`
 
@@ -269,7 +345,7 @@ GET /api/spotify/track/72IwoG8tqvIWV10IHjpNNA
 
 ## 📝 게시물 API
 
-### 7. 게시물 작성 ⭐ (JWT 필요)
+### 9. 게시물 작성 ⭐ (JWT 필요)
 
 **POST** `/api/posts`
 
@@ -322,19 +398,18 @@ const createPost = async (postData) => {
 ```json
 {
   "id": 1,
-  "title": "내가 제일 좋아하는 노래",
   "description": "이 노래 들으면 기분이 좋아져요",
+  "artist": "BTS",
+  "title": "Dynamite",
   "content": "BTS의 Dynamite는 정말 신나는 노래입니다!",
+  "authorUsername": "yeonwoo",
   "spotifyTrackId": "72IwoG8tqvIWV10IHjpNNA",
-  "trackName": "Dynamite",
-  "artistName": "BTS",
   "albumImageUrl": "https://i.scdn.co/image/ab67616d0000b273...",
-  "imageUrls": ["https://example.com/image1.jpg"],
-  "representImageUrl": "https://example.com/image1.jpg",
+  "imageUrls": ["/uploads/images/abc123.jpg"],
+  "representImageUrl": "/uploads/images/abc123.jpg",
   "tags": ["BTS", "팝", "신나는노래"],
-  "authorId": 1,
-  "authorName": "yeonwoo",
-  "createdAt": "2025-12-05T20:55:00"
+  "createdAt": "2025-12-05T20:55:00",
+  "updatedAt": "2025-12-05T20:55:00"
 }
 ```
 
@@ -378,7 +453,7 @@ await fetch('http://localhost:8080/api/posts', {
 
 ---
 
-### 8. 게시물 목록 조회
+### 10. 게시물 목록 조회
 
 **GET** `/api/posts?page=0&size=10`
 
@@ -399,22 +474,32 @@ GET /api/posts?page=0&size=10
   "content": [
     {
       "id": 3,
-      "title": "최신 게시물",
       "description": "가장 최근에 작성됨",
-      "trackName": "Dynamite",
-      "artistName": "BTS",
+      "artist": "BTS",
+      "title": "Dynamite",
+      "content": "본문 내용...",
+      "authorUsername": "yeonwoo",
+      "spotifyTrackId": "72IwoG8tqvIWV10IHjpNNA",
       "albumImageUrl": "https://...",
-      "representImageUrl": "https://...",
-      "authorName": "yeonwoo",
+      "imageUrls": ["/uploads/images/..."],
+      "representImageUrl": "/uploads/images/...",
       "tags": ["BTS", "팝"],
-      "createdAt": "2025-12-05T20:55:00"
+      "saved": false,
+      "createdAt": "2025-12-05T20:55:00",
+      "updatedAt": "2025-12-05T20:55:00"
     },
-### 9. 게시물 상세 조회
-
-**GET** `/api/posts/{postId}`
-      "trackName": "봄날",
-      "artistName": "BTS",
-      ...
+    {
+      "id": 2,
+      "description": "봄날 듣기 좋은 날",
+      "artist": "BTS",
+      "title": "봄날",
+      "authorUsername": "yeonwoo",
+      "albumImageUrl": "https://...",
+      "representImageUrl": "/uploads/images/...",
+      "tags": ["BTS", "발라드"],
+      "saved": false,
+      "createdAt": "2025-12-05T19:30:00",
+      "updatedAt": "2025-12-05T19:30:00"
     }
   ],
   "totalElements": 25,
@@ -439,12 +524,12 @@ const loadPosts = async () => {
 
 ---
 
-### 7. 게시물 상세 조회
+### 11. 게시물 상세 조회
 
 **GET** `/api/posts/{postId}`
-### 10. 태그로 게시물 검색
 
-**GET** `/api/posts/search/tag?tag={태그이름}&page=0&size=10`
+로그인하지 않아도 됩니다.
+
 **요청 예시:**
 ```
 GET /api/posts/1
@@ -454,25 +539,24 @@ GET /api/posts/1
 ```json
 {
   "id": 1,
-  "title": "내가 제일 좋아하는 노래",
   "description": "이 노래 들으면 기분이 좋아져요",
+  "artist": "BTS",
+  "title": "Dynamite",
   "content": "BTS의 Dynamite는 정말 신나는 노래입니다! 아침에 일어나서 듣기 좋아요.",
+  "authorUsername": "yeonwoo",
   "spotifyTrackId": "72IwoG8tqvIWV10IHjpNNA",
-  "trackName": "Dynamite",
-  "artistName": "BTS",
   "albumImageUrl": "https://...",
-  "imageUrls": ["https://example.com/image1.jpg"],
-  "representImageUrl": "https://example.com/image1.jpg",
+  "imageUrls": ["/uploads/images/abc123.jpg"],
+  "representImageUrl": "/uploads/images/abc123.jpg",
   "tags": ["BTS", "팝", "신나는노래"],
-  "authorId": 1,
-  "authorName": "yeonwoo",
-  "createdAt": "2025-12-05T20:55:00"
+  "createdAt": "2025-12-05T20:55:00",
+  "updatedAt": "2025-12-05T20:55:00"
 }
 ```
 
 ---
 
-### 8. 태그로 게시물 검색
+### 12. 태그로 게시물 검색
 
 **GET** `/api/posts/search/tag?tag={태그이름}&page=0&size=10`
 
@@ -487,7 +571,70 @@ GET /api/posts/search/tag?tag=BTS&page=0&size=10
 
 ---
 
-### 11. 게시물 수정 (JWT 필요)
+### 13. 아티스트명/곡명으로 게시물 검색
+
+**GET** `/api/posts/search?keyword={검색어}&page=0&size=9`
+
+로그인하지 않아도 됩니다.
+
+**🔥 중요 업데이트:**
+- **대소문자 구분 없이 검색됩니다!** (`sunmi`, `Sunmi`, `SUNMI` 모두 동일한 결과)
+- 아티스트명과 곡명을 모두 검색합니다
+- 한국어/영어 모두 검색 가능 (Spotify에서 제공하는 데이터 기준)
+
+**요청 예시:**
+```
+GET /api/posts/search?keyword=sunmi&page=0&size=9
+GET /api/posts/search?keyword=선미&page=0&size=9
+GET /api/posts/search?keyword=dynamite&page=0&size=9
+```
+
+**응답 예시 (200 OK):**
+```json
+{
+  "content": [
+    {
+      "id": 1,
+      "description": "선미 노래 최고!",
+      "artist": "Sunmi",
+      "title": "Gashina",
+      "albumImageUrl": "https://...",
+      "representImageUrl": "/uploads/images/xxx.jpg",
+      "tags": ["케이팝", "선미"],
+      "authorUsername": "yeonwoo",
+      "createdAt": "2025-12-06T10:30:00"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 9
+  },
+  "totalElements": 15,
+  "totalPages": 2,
+  "last": false
+}
+```
+
+**프론트엔드 사용 예시:**
+```javascript
+// api.js에서
+export const searchPosts = async (keyword, page = 0, size = 9) => {
+  return apiRequest(`/api/posts/search?keyword=${encodeURIComponent(keyword)}&page=${page}&size=${size}`, {
+    method: 'GET'
+  });
+};
+
+// 컴포넌트에서
+const handleSearch = async (keyword) => {
+  const result = await searchPosts(keyword, 0, 9);
+  setPosts(result.content);
+  setTotalPages(result.totalPages);
+};
+```
+
+---
+
+### 14. 게시물 수정 (JWT 필요)
 
 **PUT** `/api/posts/{postId}`
 
@@ -513,7 +660,7 @@ Content-Type: application/json
 
 ---
 
-### 12. 게시물 삭제 (JWT 필요)
+### 15. 게시물 삭제 (JWT 필요)
 
 **DELETE** `/api/posts/{postId}`
 
@@ -530,6 +677,143 @@ DELETE /api/posts/1
 ```
 
 **응답 (204 No Content):** 본문 없음
+
+---
+
+## ❤️ 좋아요(북마크) API
+
+### 16. 좋아요 토글 (JWT 필요)
+
+**POST** `/api/likes/{postId}`
+
+좋아요가 없으면 추가, 있으면 취소합니다.
+
+**Headers:**
+```
+Authorization: Bearer {JWT_TOKEN}
+```
+
+**요청 예시:**
+```
+POST /api/likes/1
+```
+
+**응답 예시 (200 OK):**
+```json
+{
+  "isLiked": true,
+  "postId": 1
+}
+```
+
+**프론트엔드 사용 예시:**
+```javascript
+const toggleLike = async (postId) => {
+  const token = localStorage.getItem('token');
+  const response = await fetch(`http://localhost:8080/api/likes/${postId}`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  const data = await response.json();
+  console.log(data.isLiked ? '좋아요 추가' : '좋아요 취소');
+  return data.isLiked;
+};
+```
+
+---
+
+### 17. 좋아요 상태 확인 (JWT 필요)
+
+**GET** `/api/likes/{postId}`
+
+현재 사용자가 해당 게시물에 좋아요를 눌렀는지 확인합니다.
+
+**Headers:**
+```
+Authorization: Bearer {JWT_TOKEN}
+```
+
+**요청 예시:**
+```
+GET /api/likes/1
+```
+
+**응답 예시 (200 OK):**
+```json
+{
+  "isLiked": true,
+  "postId": 1
+}
+```
+
+---
+
+### 18. 내가 좋아요한 게시물 목록 (JWT 필요)
+
+**GET** `/api/likes`
+
+**Headers:**
+```
+Authorization: Bearer {JWT_TOKEN}
+```
+
+**응답 예시 (200 OK):**
+```json
+[
+  {
+    "id": 1,
+    "description": "좋아요한 게시물",
+    "artist": "Sunmi",
+    "title": "Gashina",
+    "albumImageUrl": "https://...",
+    "representImageUrl": "/uploads/images/xxx.jpg",
+    "tags": ["케이팝"],
+    "authorUsername": "otheruser",
+    "createdAt": "2025-12-06T10:30:00"
+  }
+]
+```
+
+**프론트엔드 사용 예시:**
+```javascript
+const getLikedPosts = async () => {
+  const token = localStorage.getItem('token');
+  const response = await fetch('http://localhost:8080/api/likes', {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  const posts = await response.json();
+  return posts;
+};
+```
+
+---
+
+### 19. 특정 사용자의 게시물 조회
+
+**GET** `/api/posts/user/{userId}?page=0&size=10`
+
+로그인하지 않아도 됩니다.
+
+**요청 예시:**
+```
+GET /api/posts/user/1?page=0&size=10
+```
+
+**응답:** 게시물 목록 조회와 동일한 형식 (페이징 포함)
+
+**프론트엔드 사용 예시:**
+```javascript
+const getUserPosts = async (userId, page = 0, size = 10) => {
+  const response = await fetch(
+    `http://localhost:8080/api/posts/user/${userId}?page=${page}&size=${size}`
+  );
+  return await response.json();
+};
+```
 
 ---
 
@@ -856,15 +1140,29 @@ const [memoryLine, setMemoryLine] = useState("");
 
 ## 🚨 주의사항
 
-### 1. 필드명 불일치 주의!
+### 1. 필드명 불일치 주의! ⚠️
 
-**백엔드 응답 (PostResponseDto):**
+**백엔드 응답 (PostResponseDto) - 2025-12-06 업데이트:**
 ```json
 {
-  "artist": "NCT 127",      // artistName (X)
-  "title": "Fact Check"     // trackName (X)
+  "id": 1,
+  "description": "한 줄 요약",
+  "artist": "NCT 127",           // ✅ 아티스트명 (artistName이 아님!)
+  "title": "Fact Check",         // ✅ 곡명 (trackName이 아님!)
+  "content": "본문 내용",
+  "authorUsername": "yeonwoo",   // ✅ 작성자명 (authorName이 아님!)
+  "spotifyTrackId": "...",
+  "albumImageUrl": "https://...",
+  "imageUrls": ["/uploads/..."],
+  "representImageUrl": "/uploads/...",
+  "tags": ["태그1"],
+  "saved": false,
+  "createdAt": "2025-12-06T...",
+  "updatedAt": "2025-12-06T..."
 }
 ```
+
+**⚠️ 주의:** `authorId`는 응답에 포함되지 않습니다! 작성자 정보는 `authorUsername`만 제공됩니다.
 
 ### 2. 이미지 URL 처리
 
@@ -890,6 +1188,25 @@ tags: tags  // ["힙합", "신나는"]
 
 - `description`: 한 줄 요약 (카드에 표시되는 짧은 텍스트)
 - `content`: 본문 전체 (상세 페이지에 표시될 긴 텍스트)
+
+### 5. 검색 기능 개선 (2025-12-06 업데이트)
+
+**✨ 대소문자 구분 없는 검색**
+```javascript
+// 다음 검색어들은 모두 같은 결과를 반환합니다
+searchPosts("sunmi", 0, 9);    // ✅
+searchPosts("Sunmi", 0, 9);    // ✅
+searchPosts("SUNMI", 0, 9);    // ✅
+```
+
+**✨ 한글/영문 모두 지원**
+- Spotify API에서 제공하는 데이터에 한글이 포함되어 있으면 한글 검색도 가능합니다
+- 예: "선미", "방탄소년단", "아이유" 등
+
+**✨ 검색 대상**
+- 아티스트명 (`artistName`) 
+- 곡명 (`trackName`)
+- 두 필드를 OR 조건으로 검색합니다
 
 ---
 

@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/posts/**").permitAll() // 게시물 조회는 누구나 가능 (임시)
                 .requestMatchers("/api/spotify/**").permitAll() // Spotify API는 누구나 접근 가능
                 .requestMatchers("/api/upload/**").permitAll() // 파일 업로드는 누구나 가능 (임시)
+                .requestMatchers("/api/likes/**").permitAll() // 좋아요 기능 허용 (임시)
                 .requestMatchers("/uploads/**").permitAll() // 업로드된 파일 접근 허용
                 .anyRequest().authenticated() // 나머지는 로그인 필요
             );

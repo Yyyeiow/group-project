@@ -185,6 +185,15 @@ public class PostService {
     }
 
     /**
+     * 사용자가 작성한 게시물 조회
+     */
+    public Page<PostResponseDto> getPostsByUser(Long userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<Post> posts = postRepository.findByAuthor_IdOrderByCreatedAtDesc(userId, pageable);
+        return posts.map(PostResponseDto::new);
+    }
+
+    /**
      * 태그로 게시물 검색
      * 
      * @param tag 검색할 태그
@@ -195,6 +204,20 @@ public class PostService {
     public Page<PostResponseDto> getPostsByTag(String tag, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<Post> posts = postRepository.findByTagsContaining(tag, pageable);
+        return posts.map(PostResponseDto::new);
+    }
+    
+    /**
+     * 아티스트명 또는 곡명으로 게시물 검색
+     * 
+     * @param keyword 검색 키워드
+     * @param page 페이지 번호
+     * @param size 페이지 크기
+     * @return 검색 결과 게시물 목록
+     */
+    public Page<PostResponseDto> searchPosts(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Post> posts = postRepository.searchByKeyword(keyword, pageable);
         return posts.map(PostResponseDto::new);
     }
 }

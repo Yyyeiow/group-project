@@ -5,7 +5,7 @@ import TagsSection from "../components/HomepageCP/TagsSection";
 import PostCard from "../components/HomepageCP/PostCard";
 import Pagination from "../components/HomepageCP/Pagination";
 import Popup from "../components/HomepageCP/Popup";
-import { getPosts } from "../api/api"; // 백엔드 API 가져오기
+import { getPosts, checkLikeStatus } from "../api/api"; // 백엔드 API 가져오기
 import "./HomePage.css";
 
 function HomePage() {
@@ -41,17 +41,34 @@ function HomePage() {
       console.log("받은 게시물 데이터:", data);
 
       // 백엔드 데이터를 프론트엔드 형식으로 변환
-      const formattedPosts = data.content.map(post => ({
-        type: 'post',
-        id: post.id,
-        saved: false, // 저장 기능은 나중에 추가
-        description: post.description, // 한 줄 요약
-        artist: post.artist, // 아티스트 이름 (백엔드는 artist로 반환!)
-        title: post.title, // 노래 제목 (백엔드는 title로 반환!)
-        albumImageUrl: post.albumImageUrl, // 앨범 커버
-        representImageUrl: post.representImageUrl, // 대표 이미지
-        overflow: post.title && post.title.length > 20 // 제목이 길면 overflow (null 체크)
-      }));
+      const formattedPosts = await Promise.all(
+        data.content.map(async (post) => {
+          let saved = false;
+          
+          // 로그인한 경우 좋아요 상태 확인
+          const token = localStorage.getItem('token');
+          if (token) {
+            try {
+              const likeStatus = await checkLikeStatus(post.id);
+              saved = likeStatus.isLiked;
+            } catch (error) {
+              // 에러 무시 (로그인 안 한 경우 등)
+            }
+          }
+
+          return {
+            type: 'post',
+            id: post.id,
+            saved: saved, // 백엔드에서 확인한 좋아요 상태
+            description: post.description, // 한 줄 요약
+            artist: post.artist, // 아티스트 이름 (백엔드는 artist로 반환!)
+            title: post.title, // 노래 제목 (백엔드는 title로 반환!)
+            albumImageUrl: post.albumImageUrl, // 앨범 커버
+            representImageUrl: post.representImageUrl, // 대표 이미지
+            overflow: post.title && post.title.length > 20 // 제목이 길면 overflow (null 체크)
+          };
+        })
+      );
 
       setGridItems(formattedPosts);
       setTotalPages(data.totalPages || 1);
@@ -65,10 +82,10 @@ function HomePage() {
     }
   };
 
-  const handleSaveToggle = (postId) => {
+  const handleSaveToggle = (postId, isLiked) => {
     setGridItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === postId ? { ...item, saved: !item.saved } : item
+        item.id === postId ? { ...item, saved: isLiked } : item
       )
     );
   };

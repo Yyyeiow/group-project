@@ -37,6 +37,9 @@ export default function LoginPage() {
       console.log("로그인 성공:", response);
       alert(`환영합니다, ${response.username}님!`);
       
+      // Header에 로그인 상태 변경 알림
+      window.dispatchEvent(new Event('loginStatusChanged'));
+      
       // 4. 메인 페이지로 이동
       navigate("/");
 

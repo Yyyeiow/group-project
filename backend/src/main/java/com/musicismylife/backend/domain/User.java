@@ -24,8 +24,23 @@ public class User {
     @Column(nullable = false)
     private String password; // 비밀번호
 
+    // 프로필 정보
+    private String profileImageUrl; // 프로필 이미지
+    
+    @Column(length = 500)
+    private String bio; // 자기소개
+
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;  // 생성 시간
+
+    // 좋아요한 게시물
+    @ManyToMany
+    @JoinTable(
+        name = "user_liked_posts",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    private java.util.Set<Post> likedPosts = new java.util.HashSet<>();
 
     @PrePersist
     protected void onCreate() {

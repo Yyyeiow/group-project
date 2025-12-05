@@ -119,4 +119,36 @@ public class UserService {
         
         return new UserResponseDto(user);
     }
+
+    /**
+     * 프로필 업데이트
+     */
+    @Transactional
+    public UserResponseDto updateProfile(Long userId, com.musicismylife.backend.dto.ProfileUpdateDto updateDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        // username 변경 (중복 체크)
+        if (updateDto.getUsername() != null && !updateDto.getUsername().equals(user.getUsername())) {
+            if (userRepository.existsByUsername(updateDto.getUsername())) {
+                throw new RuntimeException("이미 사용 중인 아이디입니다.");
+            }
+            user.setUsername(updateDto.getUsername());
+        }
+
+        // 프로필 이미지 업데이트
+        if (updateDto.getProfileImageUrl() != null) {
+            user.setProfileImageUrl(updateDto.getProfileImageUrl());
+        }
+
+        // 자기소개 업데이트
+        if (updateDto.getBio() != null) {
+            user.setBio(updateDto.getBio());
+        }
+
+        User updated = userRepository.save(user);
+        log.info("프로필 업데이트 완료 - userId: {}", userId);
+
+        return new UserResponseDto(updated);
+    }
 }

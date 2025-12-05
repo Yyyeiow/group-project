@@ -1,12 +1,20 @@
 import { useNavigate } from 'react-router-dom';
+import { toggleLike } from '../../api/api';
 import './HomepageCPcss/PostCard.css';
 
-const PostCard = ({ post, onSaveToggle }) => {
+const PostCard = ({ post, isSaved, onSaveToggle }) => {
   const navigate = useNavigate();
 
-  const handleSaveClick = (e) => {
+  const handleSaveClick = async (e) => {
     e.stopPropagation(); // 이벤트 버블링 방지
-    onSaveToggle(post.id);
+    
+    try {
+      const result = await toggleLike(post.id);
+      onSaveToggle(post.id, result.isLiked);
+    } catch (error) {
+      console.error('좋아요 토글 실패:', error);
+      alert('로그인이 필요합니다!');
+    }
   };
 
   const handleCardClick = () => {
@@ -52,7 +60,7 @@ const PostCard = ({ post, onSaveToggle }) => {
             className="on" 
             id={uniqueId}
             type="checkbox"
-            checked={post.saved}
+            checked={isSaved !== undefined ? isSaved : post.saved}
             onChange={handleSaveClick}
             onClick={(e) => e.stopPropagation()}
           />
