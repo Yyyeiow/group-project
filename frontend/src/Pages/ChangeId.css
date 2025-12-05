@@ -1,0 +1,117 @@
+
+.edit-container {
+  max-width: 600px; 
+  margin: 60px auto; 
+  padding: 0 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+
+.edit-header {
+  text-align: center; 
+  margin-bottom: 40px;
+}
+
+.edit-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+
+.edit-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+
+.edit-profile label {
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.edit-profile label:hover {
+  opacity: 0.8; 
+}
+
+
+.edit-profile-img,
+.edit-profile-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #dbdbdb; 
+  background-color: #efefef; 
+}
+
+
+.edit-change-photo {
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0095f6;
+  cursor: pointer;
+}
+
+.edit-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+  margin-bottom: 40px;
+  width: 100%;
+  max-width: 400px; 
+  margin-left: auto;  
+  margin-right: auto; 
+}
+
+.edit-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.edit-row label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.edit-row input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none; 
+  box-sizing: border-box; 
+  transition: border-color 0.2s;
+}
+
+.edit-row input:focus {
+  border-color: #333; 
+}
+
+.edit-submit-btn {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 14px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.edit-submit-btn:hover {
+  background: #000; 
+}
