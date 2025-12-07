@@ -5,7 +5,6 @@ body {
   background: #fff;
 }
 
-
 /* 중앙 정렬 */
 .login-container {
   width: 100%;
@@ -15,31 +14,30 @@ body {
   align-items: center;
 }
 
-
 .login-box {
-  width: 320px;
-  padding: 40px 32px;
-  border-radius: 20px;
+  width: 400px; 
+  padding: 50px 40px; 
+  border-radius: 22px;
   background: #ffffff;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.20);
   text-align: center;
 }
 
 .login-title {
-  font-size: 26px;
+  font-size: 32px; 
   font-weight: bold;
-  margin-bottom: 25px;
+  margin-bottom: 35px; 
   color: #505050;
 }
 
 .login-input {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  font-size: 16px;
+  padding: 14px; 
+  margin: 14px 0; 
+  font-size: 18px; 
   font-family: inherit;
   border: none;
-  border-bottom: 1px solid #787878;
+  border-bottom: 1.5px solid #787878; 
   background: transparent;
   outline: none;
 }
@@ -47,21 +45,21 @@ body {
 .forgot {
   width: 100%;
   text-align: left;
-  margin-top: 2px;
-  font-size: 12px;
+  margin-top: 4px;
+  font-size: 14px; 
   color: #505050;
 }
 
 /* 버튼 */
 .login-btn {
   width: 100%;
-  margin-top: 20px;
-  padding: 12px 0;
-  border-radius: 25px;
+  margin-top: 30px;
+  padding: 15px 0; 
+  border-radius: 28px;
   border: none;
   background: #505050;
   color: #fff;
-  font-size: 18px;
+  font-size: 20px; 
   font-family: inherit;
   font-weight: bold;
   cursor: pointer;
@@ -69,12 +67,12 @@ body {
 }
 
 .login-btn:hover {
-  background: #505050;
+  background: #3f3f3f; 
 }
 
 .signup-text {
-  margin-top: 15px;
-  font-size: 14px;
+  margin-top: 20px;
+  font-size: 16px; 
   color: #505050;
 }
 
