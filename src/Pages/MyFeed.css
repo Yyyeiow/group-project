@@ -1,155 +1,146 @@
-/* 전체 */
 .myfeed-container {
-display: flex;
-flex-direction: column;
-align-items: center;
-background: #f1f1f1;
-min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  padding-top: 130px;
+  min-height: 100vh;
 }
 
-/* 헤더 */
+/* --- 헤더 --- */
 .myfeed-header {
-position: sticky;
-top: 0;
-width: 100%;
-background: #f1f1f1;
-padding: 15px 30px;
-display: flex;
-justify-content: space-between;
-border-bottom: 1px solid #BFBFBF;
-z-index: 10;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 140px;
+  padding: 50px 20px 10px 20px;
+  background: white;
+  border-bottom: 1px solid #BFBFBF;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.feed-title {
+  font-family: 'Courier New';
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 12px;
 }
 
-/* 버튼 + 보기 전환 */
-.header-right-all {
-display: flex;
-align-items: center;
-gap: 15px;
-}
-
-.header-btn-group {
-display: flex;
-gap: 10px;
-}
-
-.nav-btn {
-border: 1px solid #BFBFBF;
-background: #f1f1f1;
-padding: 6px 10px;
-border-radius: 0;
-cursor: pointer;
-font-weight: 600;
-}
-
+/* --- 정렬 버튼 --- */
 .view-switch {
-display: flex;
-gap: 8px;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
 }
 
 .view-switch button {
-font-size: 18px;
-background: #f1f1f1;
-border: 1px solid #BFBFBF;
-padding: 4px 8px;
-border-radius: 0;
-cursor: pointer;
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  border: 1px solid #BFBFBF;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .view-switch button.active {
-background: #BFBFBF;
+  background: #505050;
+  color: #f1f1f1;
 }
 
-/* 리스트뷰 */
-
+/* --- 리스트 --- */
 .feed-list {
-width: 100%;
-max-width: 900px;
-padding: 40px 0;
-display: flex;
-flex-direction: column;
-gap: 40px;
+  width: 100%;
+  max-width: 900px;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .post {
-width: 100%;
-padding: 25px 30px;
-background: white;
-border: 1px solid #BFBFBF;
-border-radius: 0;
+  width: 100%;
+  padding: 20px 0;
+  border-bottom: 1px solid #BFBFBF;
 }
 
-/* 날짜 */
 .post-date {
-font-size: 14px;
-margin-bottom: 10px;
-color: #555;
+  margin-bottom: 10px;
 }
 
-/* 제목 */
 .post-title {
-font-size: 18px;
-font-weight: 600;
-margin-bottom: 18px;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* 사진 (가운데 정렬) */
+.post-play-icon {
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
 .post-images {
-display: flex;
-gap: 15px;
-justify-content: center;
-margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
 .post-img-box {
-width: 150px;
-height: 150px;
-background: #d1d1d1;
-border-radius: 0;
-border: 1px solid #BFBFBF;
+  width: 230px;
+  height: 230px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid #bfbfbf;
 }
 
-/* 내용 */
-.post-content {
-white-space: pre-line;
-line-height: 1.5;
-font-size: 16px;
-padding-top: 10px;
-border-top: 1px solid #BFBFBF;
+/* 음악 이미지 */
+.api-img {
+  width: 250px;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid #bfbfbf;
 }
 
-/* 그리드 */
+.api-img:hover {
+  background-image: var(--hover-img);
+}
 
-
+/* --- 그리드 --- */
 .feed-grid {
-width: 100%;
-max-width: 1000px;
-padding: 40px 0;
-display: flex;
-gap: 20px;
-overflow-x: auto;
+  width: 1100px;
+  padding: 20px;
+  display: flex;
+  gap: 6px; 
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow-x: auto;
 }
 
 .feed-grid .post {
-flex: 0 0 auto;
-width: 300px;
-height: 300px;
-background: white;
-border: 1px solid #BFBFBF;
-border-radius: 0;
-display: flex;
-justify-content: center;
-align-items: center;
+  width: 250px;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* 대표 이미지 */
 .feed-grid .post-images {
-width: 85%;
-height: 85%;
-justify-content: center;
+  gap: 0;
+  margin: 0;
 }
 
-.feed-grid .post-img-box {
-width: 100%;
-height: 100%;
-border-radius: 0;
-}
+.feed-grid .post-img-box,
+.feed-grid .api-img {
+  width: 250px;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid #bfbfbf; }

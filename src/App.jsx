@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Signup />} />
+        <Route path="/" element={<MyFeed />} />
          {/* 회원가입 */}
         <Route path="/signup" element={<Signup />} />
 
